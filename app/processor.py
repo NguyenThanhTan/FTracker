@@ -1,13 +1,12 @@
 from typing import Optional
 
-import cv2
 import numpy as np
 
-from buffer import Buffer, Batch
-from frame_stream import FrameStream
-from settings import logger, BATCH_SIZE, MATCHING, DETECTION_COLOR, TRACK_COLOR, DETECTOR_MODEL_PATH
+from app.buffer import Buffer, Batch
+from app.frame_stream import FrameStream
+from app.settings import logger, BATCH_SIZE, MATCHING, DETECTOR_MODEL_PATH
 from detections.faceboxes.detector import Detector as Fb_detector
-from face_tracker import FaceTracker
+from app.face_tracker import FaceTracker
 from matching.face_embedding.face_matching import main, Matcher
 from copy import deepcopy
 from itertools import islice
@@ -23,14 +22,14 @@ class Processor:
         self.ifs = ifs
         self.ofs = ofs
 
-    def detect_track_match_frames(self, all_frames):
+    def detect_track_match_frames(self):
         print('Start process')
         buffer = Buffer()
         batch = Batch(BATCH_SIZE)
         flag = 0
         batch_tracks = []
         self.ofs.start()
-        for (frame_id, frame) in all_frames:
+        for (frame_id, frame) in self.ifs.get_iter():
             height, width, _ = frame.shape
             batch.update(frame, frame_id, height, width)
             detection = self.face_detector.infer(frame, path=False)  # xmin, ymin, xmax, ymax
@@ -50,7 +49,6 @@ class Processor:
                 list_tracks[id] = (xmin, ymin, width, height, score)
             batch_tracks.append(list_tracks)
             if batch.count % BATCH_SIZE == 0:
-
                 if MATCHING:
                     if batch.count % (BATCH_SIZE * 2) == 0:
                         flag = 0
@@ -62,7 +60,7 @@ class Processor:
                         main(self.matcher, batch_tracks, bitmaps, fids)
 
                         for idx, tracks in zip(buffer.out_fids, buffer.out_batchtracks):
-                            self.ofs.add(all_frames[idx - 1], tracks)
+                            self.ofs.add(self.ifs.get(idx - 1), tracks)
                         self.ofs.flush()
 
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
@@ -81,7 +79,7 @@ class Processor:
                         buffer.out_bitmaps += buffer.temp_bitmaps
                 else:
                     for idx, tracks in zip(batch.fids, batch_tracks):
-                        self.ofs.add(all_frames[idx - 1], tracks)
+                        self.ofs.add(self.ifs.get(idx - 1), tracks)
                     self.ofs.flush()
                 batch_tracks = []
 
@@ -96,10 +94,10 @@ class Processor:
                     main(self.matcher, last_tracks, last_bitmaps, last_ids)
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)],
                                            [buffer.out_batchtracks[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)]):
-                        self.ofs.add(all_frames[idx - 1], tracks)
+                        self.ofs.add(self.ifs.get(idx - 1), tracks)
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        self.ofs.add(all_frames[idx - 1], tracks)
+                        self.ofs.add(self.ifs.get(idx - 1), tracks)
                     self.ofs.flush()
                 else:
                     last_ids = list(buffer.temp_fids) + last_ids
@@ -109,14 +107,14 @@ class Processor:
 
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(0, BATCH_SIZE)],
                                            [buffer.out_batchtracks[i] for i in range(0, BATCH_SIZE)]):
-                        self.ofs.add(all_frames[idx - 1], tracks)
+                        self.ofs.add(self.ifs.get(idx - 1), tracks)
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        self.ofs.add(all_frames[idx - 1], tracks)
+                        self.ofs.add(self.ifs.get(idx - 1), tracks)
                     self.ofs.flush()
             else:
                 for idx, tracks in zip(last_ids, last_tracks):
-                    self.ofs.add(all_frames[idx - 1], tracks)
+                    self.ofs.add(self.ifs.get(idx - 1), tracks)
                 self.ofs.flush()
 
         self.ofs.stop()

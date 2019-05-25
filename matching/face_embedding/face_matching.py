@@ -1,14 +1,11 @@
-import sys
-import numpy as np
 import time
-from settings import logger
 from .matching_utils import *
 from .compresser import Compresser
 from .face_encoder import FaceEncoder, encoding_new
 from .adapter import batch_tracks_to_probes
 
 
-from scipy.interpolate import CubicSpline, interp1d
+from scipy.interpolate import interp1d
 import math
 
 class Timer(object):

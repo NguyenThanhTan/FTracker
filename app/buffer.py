@@ -1,6 +1,6 @@
 from collections import deque
 import numpy as np
-from settings import BATCH_SIZE
+from app.settings import BATCH_SIZE
 
 
 class Batch():

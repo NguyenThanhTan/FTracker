@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 
-from buffer import Buffer, Batch
-from settings import logger, BATCH_SIZE, MATCHING, DETECTION_COLOR, TRACK_COLOR, DETECTOR_MODEL_PATH
+from app.buffer import Buffer, Batch
+from app.settings import logger, BATCH_SIZE, MATCHING, DETECTION_COLOR, TRACK_COLOR, DETECTOR_MODEL_PATH
 from detections.faceboxes.detector import Detector as Fb_detector
-from face_tracker import FaceTracker
+from app.face_tracker import FaceTracker
 from matching.face_embedding.face_matching import main, Matcher
 from copy import deepcopy
 from itertools import islice

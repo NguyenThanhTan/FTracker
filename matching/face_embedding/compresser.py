@@ -1,10 +1,5 @@
-import sys
-import numpy as np
-import os
 import cv2
-from scipy import misc
-from settings import logger
-from sklearn.cluster import AgglomerativeClustering, KMeans, DBSCAN, MeanShift
+from sklearn.cluster import AgglomerativeClustering
 from skimage.feature import local_binary_pattern
 from .matching_utils import *
 

@@ -1,37 +1,10 @@
-import abc
-
 import cv2
 
-from settings import DETECTION_COLOR, TRACK_COLOR
+from app.frame_stream.frame_stream import FrameStream
+from app.settings import DETECTION_COLOR, TRACK_COLOR
 
 
-class FrameStream(abc.ABC):
-    @abc.abstractmethod
-    def add(self, frame, boxes):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def add_list(self, frame_list):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def get(self, id):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def flush(self):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def start(self):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def stop(self):
-        raise NotImplementedError
-
-
-class StaticVideoFrameStream(FrameStream):
+class OutVideoFrameStream(FrameStream):
     __detection_color = DETECTION_COLOR
     __tracking_color = TRACK_COLOR
 
@@ -50,6 +23,8 @@ class StaticVideoFrameStream(FrameStream):
             self.writer.open(self.video_path, self.four_cc, self.fps, self.frame_size, self.colored)
 
     def add(self, frame, boxes):
+        if frame is None:
+            return
         self.frames.append((frame, boxes))
 
     def add_list(self, frame_list):
@@ -78,9 +53,9 @@ class StaticVideoFrameStream(FrameStream):
                             cv2.FONT_HERSHEY_SIMPLEX,
                             0.8, self.__detection_color if det[4] > 0 else self.__tracking_color, 1, cv2.LINE_AA)
 
-                cv2.putText(frame, "Frame id: {}".format(fid), (20, 20),
-                            cv2.FONT_HERSHEY_SIMPLEX,
-                            0.8, self.__detection_color, 1, cv2.LINE_AA)
+                # cv2.putText(frame, "Frame id: {}".format(fid), (20, 20),
+                #             cv2.FONT_HERSHEY_SIMPLEX,
+                #             0.8, self.__detection_color, 1, cv2.LINE_AA)
             cv2.imwrite("output/office3/{}.jpg".format(fid), frame)
             self.writer.write(frame)
         self.current_frame = len(self.frames)
@@ -88,3 +63,9 @@ class StaticVideoFrameStream(FrameStream):
     def stop(self):
         if self.writer.isOpened():
             self.writer.release()
+
+    def get_iter(self):
+        raise NotImplementedError
+
+    def get_meta(self):
+        raise NotImplementedError

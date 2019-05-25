@@ -1,6 +1,5 @@
-import os
 import numpy as np
-from settings import logger
+from app.settings import logger
 
 def get_center(abcd):
     return ((int(abcd[2]) - int(abcd[0])) / 2 + int(abcd[0]), (int(abcd[3]) - int(abcd[1])) / 2 + int(abcd[1]))

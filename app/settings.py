@@ -1,5 +1,5 @@
 import logging.config
-import common
+from app import common
 
 # FACE MODEL ENV VARIABLE
 MODEL_PATH = "/opt/face/model_file/high_pclowloss.pth"

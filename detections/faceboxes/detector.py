@@ -1,4 +1,4 @@
-import settings
+from app import settings
 import torch
 import torch.backends.cudnn as cudnn
 import time
@@ -6,7 +6,6 @@ from .utils.layers.functions.prior_box import PriorBox
 from .utils.nms_wrapper import nms
 from .utils.models.faceboxes import FaceBoxes
 from .utils.box_utils import decode
-from .utils.timer import Timer
 from .utils.config import cfg
 import cv2
 import numpy as np

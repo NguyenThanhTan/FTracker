@@ -1,8 +1,8 @@
 import numpy as np
 import cv2
-from settings import logger
+from app.settings import logger
 from utils.utilities.utilities import to_xywh, cal_iou, to_xyxy
-from kalman_wrapper import KalmanTracker
+from app.kalman_wrapper import KalmanTracker
 from scipy.optimize import linear_sum_assignment
 
 IOU_THRES = 0.3
