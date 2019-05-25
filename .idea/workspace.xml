@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5556e0b8-d86d-46b4-8bc8-1166d9c5e66d" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assigner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/buffer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/detections/s3fd/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eval.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frame_stream.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile.cuda9.cudnn7" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.cuda9.cudnn7" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/box_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/box_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/build.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/build.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/layers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/layers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/layers/functions/prior_box.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/layers/functions/prior_box.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/models/faceboxes.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/models/faceboxes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/models/faceboxes_double.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/models/faceboxes_double.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/cpu_nms.c" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/cpu_nms.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/cpu_nms.cpython-35m-x86_64-linux-gnu.so" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/cpu_nms.cpython-35m-x86_64-linux-gnu.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/cpu_nms.pyx" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/cpu_nms.pyx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.cpython-35m-x86_64-linux-gnu.so" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.cpython-35m-x86_64-linux-gnu.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.pyx" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/gpu_nms.pyx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/nms_kernel.cu" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/nms_kernel.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms/py_cpu_nms.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms/py_cpu_nms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/nms_wrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/nms_wrapper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/faceboxes/utils/timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/faceboxes/utils/timer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/s3fd" beforeDir="false" afterPath="$PROJECT_DIR$/detections/s3fd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/s3fd/layers/functions/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/s3fd/layers/functions/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/s3fd/s3fd.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/s3fd/s3fd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/anchor.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/anchor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/bin/tensorboard" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/bin/tensorboard" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/detector.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/detector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/evaluate.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/evaluate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/evaluation_metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/evaluation_metrics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/detections/sfd/voc_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/detections/sfd/voc_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/face_tracker.py" beforeDir="false" afterPath="$PROJECT_DIR$/face_tracker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="471">
+              <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/processor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="64" column="60" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
+              <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
+              <caret line="98" column="56" selection-start-line="98" selection-start-column="56" selection-end-line="98" selection-end-column="56" />
+              <caret line="101" column="56" selection-start-line="101" selection-start-column="56" selection-end-line="101" selection-end-column="56" />
+              <caret line="111" column="56" selection-start-line="111" selection-start-column="56" selection-end-line="111" selection-end-column="56" />
+              <caret line="114" column="56" selection-start-line="114" selection-start-column="56" selection-end-line="114" selection-end-column="56" />
+              <caret line="118" column="52" selection-start-line="118" selection-start-column="52" selection-end-line="118" selection-end-column="52" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="472">
+              <caret line="70" selection-start-line="70" selection-end-line="70" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/buffer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assigner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="30" column="88" selection-start-line="30" selection-start-column="88" selection-end-line="30" selection-end-column="88" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-2147474606/cv2/cv2/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="9443" column="4" selection-start-line="9443" selection-start-column="4" selection-end-line="9443" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/face_tracker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/frame_stream.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-639">
+              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>type</find>
+      <find>create new</find>
+      <find>.set_id</find>
+      <find>delete_tail</find>
+      <find>refine tracklet</find>
+      <find>set_id</find>
+      <find>logger.debug</find>
+      <find>last_tracks</find>
+      <find>batch_tracks</find>
+      <find>rec</find>
+      <find>test</find>
+      <find>compute_</find>
+      <find>get_patches</find>
+      <find>rectangle</find>
+      <find>det[</find>
+      <find>active</find>
+      <find>self.draw_frame(all_frames, idx, tracks, )</find>
+      <find>draw</find>
+      <find>self.face</find>
+      <find>infer</find>
+      <find>detection</find>
+      <find>SFD</find>
+      <find>print</find>
+      <find>match_in_batch</find>
+      <find>last_frame</find>
+      <find>iou</find>
+      <find>print(</find>
+      <find>draw_frame</find>
+      <find>office3</find>
+      <find>BATCH</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>logger.info</replace>
+      <replace>logger.debug</replace>
+      <replace>self.draw_frame(all_frames, idx, tracks, writer)</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/detections/sfd/config.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/utils/utilities/utilities.py" />
+        <option value="$PROJECT_DIR$/matching/face_embedding/face_encoder.py" />
+        <option value="$PROJECT_DIR$/matching/face_embedding/compresser.py" />
+        <option value="$PROJECT_DIR$/matching/face_embedding/face_matching.py" />
+        <option value="$PROJECT_DIR$/matching/face_embedding/matching_utils.py" />
+        <option value="$PROJECT_DIR$/detections/faceboxes/Detector.py" />
+        <option value="$PROJECT_DIR$/detections/sfd/detector.py" />
+        <option value="$PROJECT_DIR$/detections/faceboxes/detector.py" />
+        <option value="$PROJECT_DIR$/Dockerfile.cuda9.cudnn7" />
+        <option value="$PROJECT_DIR$/eval.py" />
+        <option value="$PROJECT_DIR$/common.py" />
+        <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/assigner.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/buffer.py" />
+        <option value="$PROJECT_DIR$/face_tracker.py" />
+        <option value="$PROJECT_DIR$/processor.py" />
+        <option value="$PROJECT_DIR$/frame_stream.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/other.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="170" />
+    <option name="y" value="119" />
+    <option name="width" value="1026" />
+    <option name="height" value="557" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="face_service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="face_service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="face_service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="face_service" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="face_service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="face_service" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="videos" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="face_service" type="b2602c69:ProjectViewProjectNode" />
+              <item name="face_service" type="462c0819:PsiDirectoryNode" />
+              <item name="output" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Course" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/detections/faceboxes" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="face_service" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5556e0b8-d86d-46b4-8bc8-1166d9c5e66d" name="Default" comment="" />
+      <created>1556165757881</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1556165757881</updated>
+      <workItem from="1558770766633" duration="79000" />
+      <workItem from="1558770989710" duration="6672000" />
+      <workItem from="1558779043563" duration="1657000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="8408000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="27" width="1366" height="741" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21148036" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32761312" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.1664888" />
+      <window_info anchor="bottom" id="Docker" order="7" weight="0.32917318" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32917318" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32917318" />
+      <window_info anchor="bottom" id="File Transfer" order="13" weight="0.122732125" />
+      <window_info anchor="bottom" id="Educational.CheckDetails" order="14" />
+      <window_info anchor="bottom" id="Messages" order="15" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Remote Host" order="3" weight="0.12084592" />
+      <window_info anchor="right" id="SciView" order="4" weight="0.32930514" />
+      <window_info anchor="right" id="Database" order="5" weight="0.32930514" />
+      <window_info anchor="right" x="0" y="0" width="291" height="541" id="Documentation" order="6" side_tool="true" weight="0.32930514" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../hades/docker/Dockerfile.face.gpu.matching.verB.pytorch" />
+    <entry file="file://$PROJECT_DIR$/detections/sfd/images/test.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/images/tensorboard.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/logger.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-320">
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matching/face_embedding/adapter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="53" column="10" selection-start-line="53" selection-start-column="5" selection-end-line="53" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utilities/utilities.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/anchor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1065">
+          <caret line="78" column="5" selection-start-line="78" selection-start-column="5" selection-end-line="78" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/faceboxes/utils/config.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/faceboxes/utils/box_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matching/face_embedding/matching_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitmodules">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/sfd/detector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-219">
+          <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matching/body_matching/ColorNaming/0_1362_599_1437_693_0.9893559813499451.jpg" />
+    <entry file="file://$PROJECT_DIR$/data/videos/office3/0001.jpg" />
+    <entry file="file://$PROJECT_DIR$/matching/face_embedding/compresser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="51" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matching/body_matching/Facenet/face_encoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detections/faceboxes/detector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile.cuda9.cudnn7">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="18" lean-forward="true" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matching/face_embedding/face_matching.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="460" column="26" selection-start-line="460" selection-start-column="12" selection-end-line="460" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/matching/face_embedding/face_encoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="112" column="27" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/facedt_service.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kalman_wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.jpg" />
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="50" column="10" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-2147474606/cv2/cv2/VideoWriter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="868">
+          <caret line="150" column="8" selection-start-line="150" selection-start-column="8" selection-end-line="150" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="195">
+            <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/face_tracker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="472">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-2147474606/cv2/cv2/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="9443" column="4" selection-start-line="9443" selection-start-column="4" selection-end-line="9443" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assigner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="30" column="88" selection-start-line="30" selection-start-column="88" selection-end-line="30" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/buffer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="64" column="60" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
+          <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
+          <caret line="98" column="56" selection-start-line="98" selection-start-column="56" selection-end-line="98" selection-end-column="56" />
+          <caret line="101" column="56" selection-start-line="101" selection-start-column="56" selection-end-line="101" selection-end-column="56" />
+          <caret line="111" column="56" selection-start-line="111" selection-start-column="56" selection-end-line="111" selection-end-column="56" />
+          <caret line="114" column="56" selection-start-line="114" selection-start-column="56" selection-end-line="114" selection-end-column="56" />
+          <caret line="118" column="52" selection-start-line="118" selection-start-column="52" selection-end-line="118" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frame_stream.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-639">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/a.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-347" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

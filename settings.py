@@ -3,6 +3,7 @@ import common
 
 # FACE MODEL ENV VARIABLE
 MODEL_PATH = "/opt/face/model_file/high_pclowloss.pth"
+DETECTOR_MODEL_PATH = 'weights/pre_high_pc_rotatelowloss.pth'
 CONFIDENCE_THRES = float(common.getEnv('CONFIDENCE_THRES', "0.9"))
 SCALE_UP = float(common.getEnv("SCALE_UP", "0.0"))
 INPUT_SIZE = float(common.getEnv("INPUT_SIZE", "1280."))
@@ -62,3 +63,9 @@ LOGGING_CONFIG = {
 }
 logging_config = logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger("default")
+
+BATCH_SIZE = 32
+MATCHING = 1
+MIN_SCORE = 0.9
+DETECTION_COLOR = (0, 255, 0)
+TRACK_COLOR = (0, 0, 255)

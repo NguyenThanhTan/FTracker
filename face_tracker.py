@@ -1,14 +1,13 @@
 import numpy as np
 import cv2
-import time
-import os
 from settings import logger
-from utils.utilities.utilities import make_folder, to_xywh, cal_iou, to_xyxy
+from utils.utilities.utilities import to_xywh, cal_iou, to_xyxy
 from kalman_wrapper import KalmanTracker
 from scipy.optimize import linear_sum_assignment
 
 IOU_THRES = 0.3
 KALMAN = 1
+
 
 class FaceTracks():
     def __init__(self, id, troi, tracker, score, frame):
@@ -27,6 +26,7 @@ class FaceTracks():
         found, box = cf_tracker.update(frame)
         return found, box
 
+
 class FaceTracker():
     def __init__(self, allow_live=True):
         self.face_tracks = {}
@@ -34,22 +34,21 @@ class FaceTracker():
         self.n_active_tracks = 0
         self.allow_live = allow_live
 
-
     @staticmethod
     def parse(track_id, roi, score):
         """
         Return geometries for each tracked/detected box
         """
         geo = {
-                "id": track_id,
-                "xmin": int(roi[0]), "ymin": int(roi[1]),
-                "width": int(roi[2]), "height": int(roi[3]),
-                "score": score
-                }
+            "id": track_id,
+            "xmin": int(roi[0]), "ymin": int(roi[1]),
+            "width": int(roi[2]), "height": int(roi[3]),
+            "score": score
+        }
         return geo
 
     def get_active_track(self):
-        track_meta = {"geometries":[]}
+        track_meta = {"geometries": []}
         for track in self.face_tracks.values():
             if track.active:
                 geo = self.parse(track.track_id, track.troi, track.score)
@@ -73,9 +72,14 @@ class FaceTracker():
             tracker = cv2.TrackerKCF_create()
             init = tracker.init(frame, roi)
         if not init:
-            logger.debug("cannot create tracker for obj [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".format(bbox[0], bbox[1], bbox[2], bbox[3], self.track_count))
+            logger.debug(
+                "cannot create tracker for obj [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".format(bbox[0], bbox[1],
+                                                                                                   bbox[2], bbox[3],
+                                                                                                   self.track_count))
         else:
-            logger.debug("create tracker for obj [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".format(bbox[0], bbox[1], bbox[2], bbox[3], self.track_count))
+            logger.debug(
+                "create tracker for obj [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".format(bbox[0], bbox[1], bbox[2],
+                                                                                            bbox[3], self.track_count))
             self.n_active_tracks += 1
         self.face_tracks[self.track_count] = FaceTracks(self.track_count, roi, tracker, bbox[4], frame)
         # self.face_tracks[self.track_count].last_frame = frame
@@ -90,9 +94,11 @@ class FaceTracker():
         self.face_tracks[track_id].last_frame = frame
         if not update:
             logger.debug("cannot update tracker for obj [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".
-                  format(dbox[0], dbox[1], dbox[2], dbox[3], track_id))
+                         format(dbox[0], dbox[1], dbox[2], dbox[3], track_id))
         else:
-            logger.debug("update box - [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".format(dbox[0], dbox[1], dbox[2], dbox[3], track_id))
+            logger.debug(
+                "update box - [{:.1f}, {:.1f}, {:.1f}, {:.1f}] with id {}".format(dbox[0], dbox[1], dbox[2], dbox[3],
+                                                                                  track_id))
             if self.face_tracks[track_id].life_length < 20:
                 self.face_tracks[track_id].life_length += 1
 
@@ -187,7 +193,6 @@ class FaceTracker():
                 self.update_track(frame, trackid, detected_bboxes[detection_idx])
                 detected_index[detection_idx] = 1
                 track_index[trackid] = 1
-
 
         for track_id, track_obj in self.face_tracks.items():
             if track_index[track_id] == 0:
