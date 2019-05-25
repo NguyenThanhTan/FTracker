@@ -1,0 +1,6 @@
+[submodule "detections/s3fd"]
+	path = detections/s3fd
+	url = https://github.com/yxlijun/S3FD.pytorch.git
+[submodule "detections/sfd"]
+	path = detections/sfd
+	url = https://github.com/louis-she/sfd.pytorch.git
