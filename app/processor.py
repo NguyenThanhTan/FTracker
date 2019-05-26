@@ -12,7 +12,7 @@ from copy import deepcopy
 from itertools import islice
 
 
-class Processor:
+class Processor(object):
     def __init__(self, ifs: Optional[FrameStream], ofs: FrameStream):
         # self.face_detector = SFD_detector(model='detections/sfd/epoch_204.pth.tar')
         self.face_detector = Fb_detector(model_path=DETECTOR_MODEL_PATH)
@@ -22,7 +22,7 @@ class Processor:
         self.ifs = ifs
         self.ofs = ofs
 
-    def detect_track_match_frames(self):
+    def start(self):
         print('Start process')
         buffer = Buffer()
         batch = Batch(BATCH_SIZE)
@@ -60,7 +60,7 @@ class Processor:
                         main(self.matcher, batch_tracks, bitmaps, fids)
 
                         for idx, tracks in zip(buffer.out_fids, buffer.out_batchtracks):
-                            self.ofs.add(self.ifs.get(idx - 1), tracks)
+                            self.ofs.add(self.ifs.get(idx), tracks)
                         self.ofs.flush()
 
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
@@ -79,7 +79,7 @@ class Processor:
                         buffer.out_bitmaps += buffer.temp_bitmaps
                 else:
                     for idx, tracks in zip(batch.fids, batch_tracks):
-                        self.ofs.add(self.ifs.get(idx - 1), tracks)
+                        self.ofs.add(self.ifs.get(idx), tracks)
                     self.ofs.flush()
                 batch_tracks = []
 
@@ -94,10 +94,10 @@ class Processor:
                     main(self.matcher, last_tracks, last_bitmaps, last_ids)
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)],
                                            [buffer.out_batchtracks[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)]):
-                        self.ofs.add(self.ifs.get(idx - 1), tracks)
+                        self.ofs.add(self.ifs.get(idx), tracks)
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        self.ofs.add(self.ifs.get(idx - 1), tracks)
+                        self.ofs.add(self.ifs.get(idx), tracks)
                     self.ofs.flush()
                 else:
                     last_ids = list(buffer.temp_fids) + last_ids
@@ -107,14 +107,14 @@ class Processor:
 
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(0, BATCH_SIZE)],
                                            [buffer.out_batchtracks[i] for i in range(0, BATCH_SIZE)]):
-                        self.ofs.add(self.ifs.get(idx - 1), tracks)
+                        self.ofs.add(self.ifs.get(idx), tracks)
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        self.ofs.add(self.ifs.get(idx - 1), tracks)
+                        self.ofs.add(self.ifs.get(idx), tracks)
                     self.ofs.flush()
             else:
                 for idx, tracks in zip(last_ids, last_tracks):
-                    self.ofs.add(self.ifs.get(idx - 1), tracks)
+                    self.ofs.add(self.ifs.get(idx), tracks)
                 self.ofs.flush()
 
         self.ofs.stop()

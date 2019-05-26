@@ -38,7 +38,8 @@ class OutVideoFrameStream(FrameStream):
             raise Exception('Write closed!')
         if self.current_frame == len(self.frames):
             return
-        for fid, ((_, frame), boxes) in enumerate(self.frames[self.current_frame:]):
+        print("start flush from %d" % self.current_frame)
+        for _, ((fid, frame), boxes) in enumerate(self.frames[self.current_frame:]):
             for bid, det in boxes.items():
                 if int(bid) > 1000:
                     continue
@@ -53,9 +54,9 @@ class OutVideoFrameStream(FrameStream):
                             cv2.FONT_HERSHEY_SIMPLEX,
                             0.8, self.__detection_color if det[4] > 0 else self.__tracking_color, 1, cv2.LINE_AA)
 
-                # cv2.putText(frame, "Frame id: {}".format(fid), (20, 20),
-                #             cv2.FONT_HERSHEY_SIMPLEX,
-                #             0.8, self.__detection_color, 1, cv2.LINE_AA)
+                cv2.putText(frame, "Frame id: {}".format(fid), (20, 20),
+                            cv2.FONT_HERSHEY_SIMPLEX,
+                            0.8, self.__detection_color, 1, cv2.LINE_AA)
             cv2.imwrite("output/office3/{}.jpg".format(fid), frame)
             self.writer.write(frame)
         self.current_frame = len(self.frames)
