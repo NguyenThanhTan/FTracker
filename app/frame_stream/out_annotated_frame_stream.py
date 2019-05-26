@@ -1,9 +1,6 @@
 import json
-
-import cv2
-
 from app.frame_stream.frame_stream import FrameStream
-from app.settings import DETECTION_COLOR, TRACK_COLOR
+
 
 class OutAnnotatedFrameStream(FrameStream):
     def __init__(self, file_path):
@@ -15,8 +12,9 @@ class OutAnnotatedFrameStream(FrameStream):
     def start(self):
         self.frames = []
         self.locked = False
-        with open(self.file_path, "w") as f:
+        with open(self.file_path, "w+") as f:
             f.truncate(0)
+            f.write('[')
 
     def add(self, frame, boxes):
         if frame is None:
@@ -31,30 +29,30 @@ class OutAnnotatedFrameStream(FrameStream):
         self.frames += frame_list
 
     def get(self, fid):
-        return self.frames[fid]
+        raise NotImplementedError
 
     def flush(self):
         # if self.current_frame == len(self.frames):
         #     return
-        with open(self.file_path, "w+") as f:
-            records = []
-            for _, ((fid, frame), boxes) in enumerate(self.frames[self.current_frame:]):
+        with open(self.file_path, "a+") as f:
+            for i, ((fid, frame), boxes) in enumerate(self.frames):
+                boxes_r = {}
+                for bid, det in boxes.items():
+                    boxes_r[bid] = det[:4]
                 record = {
                     'fid': fid,
-                    'boxes': []
+                    'boxes': boxes_r
                 }
-                for bid, det in boxes.items():
-                    record['boxes'].append({
-                        'bid': bid,
-                        'det': det[:3]
-                    })
-                records.append(record)
-            f.write(json.dumps(records))
+                f.write(json.dumps(record))
+                f.write(',')
+            self.frames = []
             # self.current_frame = len(self.frames)
         return
 
     def stop(self):
         self.locked = True
+        with open(self.file_path, "a+") as f:
+            f.write(']')
 
     def get_iter(self):
         raise NotImplementedError
