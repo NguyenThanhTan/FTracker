@@ -9,3 +9,4 @@ data/
 *.pb
 logs/
 .idea/
+.venv/
