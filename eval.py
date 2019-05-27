@@ -87,9 +87,11 @@ class FTracker(Tracker):
         bb[3] += bb[1]
 
         boxes = self.res[self.current_frame]['boxes'] # {"1": [511, 24, 124, 179]}
-        BBGT = np.zeros(shape=(0, 5))
+        BBGT = np.zeros(shape=(0, 4))
+        ids = []
         for bid in boxes:
-            BBGT = np.vstack((BBGT, boxes[bid] + [int(bid)]))
+            BBGT = np.vstack((BBGT, boxes[bid]))
+            ids.append(bid)
             # det = boxes[bid]
             # box_pos = {
             #     'x1': det[0],
@@ -126,7 +128,7 @@ class FTracker(Tracker):
             jmax = np.argmax(overlaps)
 
         assert ovmax > 0.3, 'first frame does not have necessary box'
-        self.track_target = BBGT[jmax][4]
+        self.track_target = ids[jmax]
         print('Initialisation done!')
 
     def update(self, image):
