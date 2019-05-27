@@ -1,7 +1,7 @@
 __pycache__/
-*.mp4
-*.avi
-*.jpg
+**.mp4
+**.avi
+**.jpg
 mobiface_toolkit/
 mobiface80/
 output/
@@ -10,3 +10,4 @@ data/
 logs/
 .idea/
 .venv/
+weights/

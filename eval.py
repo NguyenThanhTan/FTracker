@@ -1,5 +1,5 @@
 import json
-
+import numpy as np
 from mobiface_toolkit.mobiface.trackers import Tracker
 from mobiface_toolkit.mobiface.experiments import ExperimentMobiFace
 
@@ -72,32 +72,60 @@ class FTracker(Tracker):
         with open(self.fn, 'r') as f:
             self.res = json.loads(f.read())
 
-    def init(self, image, box):
+    def init(self, image, bb):
+        # perform your initialisation here
         if self.current_dataset is None:
             raise NotImplementedError
         self.current_frame = 0
-        init_box_pos = {
-            'x1': box[0],
-            'y1': box[1],
-            'x2': box[0] + box[2],
-            'y2': box[1] + box[3],
-        }
-        pos = 0
-        boxes = self.res[self.current_frame]['boxes']
+        # init_box_pos = {
+        #     'x1': box[0],
+        #     'y1': box[1],
+        #     'x2': box[0] + box[2],
+        #     'y2': box[1] + box[3],
+        # }
+        bb[2] += bb[0]
+        bb[3] += bb[1]
+
+        boxes = self.res[self.current_frame]['boxes'] # {"1": [511, 24, 124, 179]}
+        BBGT = np.array([])
         for bid in boxes:
-            det = boxes[bid]
-            box_pos = {
-                'x1': det[0],
-                'y1': det[1],
-                'x2': det[0] + det[2],
-                'y2': det[1] + det[3],
-            }
-            print(init_box_pos, box_pos)
-            x = get_iou(init_box_pos, box_pos)
-            if x > pos:
-                pos = x
-                self.track_target = bid
-        # perform your initialisation here
+            BBGT = np.concatenate((BBGT, boxes[bid] + [int(bid)]), axis=0)
+            # det = boxes[bid]
+            # box_pos = {
+            #     'x1': det[0],
+            #     'y1': det[1],
+            #     'x2': det[0] + det[2],
+            #     'y2': det[1] + det[3],
+            # }
+            # print(init_box_pos, box_pos)
+            # x = get_iou(init_box_pos, box_pos)
+            # if x > pos:
+            #     pos = x
+            #     self.track_target = bid
+        BBGT[:, 2] += BBGT[:, 0]
+        BBGT[:, 3] += BBGT[:, 1]
+        if BBGT.size > 0:
+            # compute overlaps
+            # intersection
+            ixmin = np.maximum(BBGT[:, 0], bb[0])
+            iymin = np.maximum(BBGT[:, 1], bb[1])
+            ixmax = np.minimum(BBGT[:, 2], bb[2])
+            iymax = np.minimum(BBGT[:, 3], bb[3])
+            iw = np.maximum(ixmax - ixmin + 1., 0.)
+            ih = np.maximum(iymax - iymin + 1., 0.)
+            inters = iw * ih
+
+            # union
+            uni = ((bb[2] - bb[0] + 1.) * (bb[3] - bb[1] + 1.) +
+                   (BBGT[:, 2] - BBGT[:, 0] + 1.) *
+                   (BBGT[:, 3] - BBGT[:, 1] + 1.) - inters)
+
+            overlaps = inters / uni
+            ovmax = np.max(overlaps)
+            jmax = np.argmax(overlaps)
+
+        assert ovmax > 0.3, 'first frame does not have necessary box'
+        self.track_target = BBGT[jmax][4]
         print('Initialisation done!')
 
     def update(self, image):
