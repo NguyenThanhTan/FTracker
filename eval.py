@@ -87,9 +87,9 @@ class FTracker(Tracker):
         bb[3] += bb[1]
 
         boxes = self.res[self.current_frame]['boxes'] # {"1": [511, 24, 124, 179]}
-        BBGT = np.array([])
+        BBGT = np.zeros(shape=(0, 5))
         for bid in boxes:
-            BBGT = np.concatenate((BBGT, boxes[bid] + [int(bid)]), axis=0)
+            BBGT = np.vstack((BBGT, boxes[bid] + [int(bid)]))
             # det = boxes[bid]
             # box_pos = {
             #     'x1': det[0],
@@ -102,6 +102,8 @@ class FTracker(Tracker):
             # if x > pos:
             #     pos = x
             #     self.track_target = bid
+        print(BBGT)
+        print(bb)
         BBGT[:, 2] += BBGT[:, 0]
         BBGT[:, 3] += BBGT[:, 1]
         if BBGT.size > 0:
