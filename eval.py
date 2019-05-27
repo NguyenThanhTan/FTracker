@@ -102,6 +102,7 @@ class FTracker(Tracker):
             # if x > pos:
             #     pos = x
             #     self.track_target = bid
+        print(BBGT)
         BBGT[:, 2] += BBGT[:, 0]
         BBGT[:, 3] += BBGT[:, 1]
         if BBGT.size > 0:
@@ -154,5 +155,5 @@ if __name__ == '__main__':
         result_dir='results',  # where to store tracking results
         report_dir='reports'  # where to store evaluation reports
     )
-    experiment.run(tracker, visualize=True)
+    experiment.run(tracker, visualize=False)
     experiment.report(['FTracker'])
