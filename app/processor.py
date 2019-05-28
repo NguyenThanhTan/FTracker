@@ -99,11 +99,14 @@ class Processor(object):
                     main(self.matcher, last_tracks, last_bitmaps, last_ids)
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)],
                                            [buffer.out_batchtracks[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)]):
-                        self.ofs.add(self.ifs.get(idx), tracks)
+                        for ofs in self.ofss:
+                            ofs.add(self.ifs.get(idx), tracks)
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        self.ofs.add(self.ifs.get(idx), tracks)
-                    self.ofs.flush()
+                        for ofs in self.ofss:
+                            ofs.add(self.ifs.get(idx), tracks)
+                    for ofs in self.ofss:
+                        ofs.flush()
                 else:
                     last_ids = list(buffer.temp_fids) + last_ids
                     last_bitmaps = list(buffer.temp_bitmaps) + last_bitmaps
@@ -112,14 +115,19 @@ class Processor(object):
 
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(0, BATCH_SIZE)],
                                            [buffer.out_batchtracks[i] for i in range(0, BATCH_SIZE)]):
-                        self.ofs.add(self.ifs.get(idx), tracks)
+                        for ofs in self.ofss:
+                            ofs.add(self.ifs.get(idx), tracks)
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        self.ofs.add(self.ifs.get(idx), tracks)
-                    self.ofs.flush()
+                        for ofs in self.ofss:
+                            ofs.add(self.ifs.get(idx), tracks)
+                    for ofs in self.ofss:
+                        ofs.flush()
             else:
                 for idx, tracks in zip(last_ids, last_tracks):
-                    self.ofs.add(self.ifs.get(idx), tracks)
-                self.ofs.flush()
-
-        self.ofs.stop()
+                    for ofs in self.ofss:
+                        ofs.add(self.ifs.get(idx), tracks)
+                for ofs in self.ofss:
+                    ofs.flush()
+        for ofs in self.ofss:
+            ofs.stop()

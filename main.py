@@ -73,7 +73,7 @@ def multiple():
         fps = ifs.reader.get_meta_data()['fps']
         ofss = []
         ofs = OutVideoFrameStream(
-            video_path='output/office3.mp4',
+            video_path=os.path.join(args.save_dir, '{}.mp4'.format(ff)),
             codec='MJPG',
             fps=fps,
             height=height,
