@@ -70,7 +70,9 @@ class FTracker(Tracker):
         self.current_dataset = dataset
         self.fn = '{op}/{d}.txt'.format(op='output/test', d='_'.join(self.current_dataset.split('_')[:-1]))
         with open(self.fn, 'r') as f:
-            self.res = json.loads(f.read())
+            text = f.read()
+            text = text[:-2] + ']'
+            self.res = json.loads(text)
 
     def init(self, image, bb):
         # perform your initialisation here
