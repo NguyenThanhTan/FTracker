@@ -13,14 +13,14 @@ from itertools import islice
 
 
 class Processor(object):
-    def __init__(self, ifs: Optional[FrameStream], ofs: FrameStream):
+    def __init__(self, ifs: Optional[FrameStream], ofss: [FrameStream]):
         # self.face_detector = SFD_detector(model='detections/sfd/epoch_204.pth.tar')
         self.face_detector = Fb_detector(model_path=DETECTOR_MODEL_PATH)
         self.face_tracker = FaceTracker()
         # self.encoder = FaceEncoder()
         self.matcher = Matcher()
         self.ifs = ifs
-        self.ofs = ofs
+        self.ofss = ofss
 
     def start(self):
         print('Start process')
@@ -28,7 +28,8 @@ class Processor(object):
         batch = Batch(BATCH_SIZE)
         flag = 0
         batch_tracks = []
-        self.ofs.start()
+        for ofs in self.ofss:
+            ofs.start()
         for (frame_id, frame) in self.ifs.get_iter():
             height, width, _ = frame.shape
             batch.update(frame, frame_id, height, width)
@@ -60,8 +61,10 @@ class Processor(object):
                         main(self.matcher, batch_tracks, bitmaps, fids)
 
                         for idx, tracks in zip(buffer.out_fids, buffer.out_batchtracks):
-                            self.ofs.add(self.ifs.get(idx), tracks)
-                        self.ofs.flush()
+                            for ofs in self.ofss:
+                                ofs.add(self.ifs.get(idx), tracks)
+                        for ofs in self.ofss:
+                            ofs.flush()
 
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
                         buffer.out_fids += fids[BATCH_SIZE:]
@@ -79,8 +82,10 @@ class Processor(object):
                         buffer.out_bitmaps += buffer.temp_bitmaps
                 else:
                     for idx, tracks in zip(batch.fids, batch_tracks):
-                        self.ofs.add(self.ifs.get(idx), tracks)
-                    self.ofs.flush()
+                        for ofs in self.ofss:
+                            ofs.add(self.ifs.get(idx), tracks)
+                    for ofs in self.ofss:
+                        ofs.flush()
                 batch_tracks = []
 
         # flush the queue -> process the remaining frames

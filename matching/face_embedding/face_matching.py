@@ -455,7 +455,7 @@ class Matcher():
         return probes
 
 
-    def new_match_in_batch_hungarian(self, probes, threshold = 0.85):
+    def new_match_in_batch_hungarian(self, probes, threshold = 1.05):
 
         logger.debug('Matching in batch')
         self.identities_in_batch = []
@@ -533,7 +533,7 @@ class Matcher():
 
 
 
-    def new_match_hungarian(self, probes, threshold=0.85):
+    def new_match_hungarian(self, probes, threshold=1.05):
 
         self.new_match_in_batch_hungarian(probes)
 

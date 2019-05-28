@@ -24,17 +24,17 @@ def single(video_id):
         to=int(meta_data.loc[meta_data['youtube_video_id'] == '{}'.format(video_id)]['last_frame']),
     )
     width, height = ifs.get_meta()['source_size']
-
-    # ofs = OutVideoFrameStream(
-    #     video_path=os.path.join(args.save_dir, '{}.mp4'.format(video_id)),
-    #     codec='MJPG',
-    #     fps=30,
-    #     height=height,
-    #     width=width
-    # )
-    ofs = OutAnnotatedFrameStream(
-        file_path='output/out.txt'
+    fps = ifs.reader.get_meta_data()['fps']
+    ofs = OutVideoFrameStream(
+        video_path=os.path.join(args.save_dir, '{}.mp4'.format(video_id)),
+        codec='MJPG',
+        fps=fps,
+        height=height,
+        width=width
     )
+    # ofs = OutAnnotatedFrameStream(
+    #     file_path='output/out.txt'
+    # )
     processor = Processor(ifs, ofs)
     processor.start()
 
@@ -70,18 +70,21 @@ def multiple():
             to=to
         )
         width, height = ifs.get_meta()['source_size']
-
-        # ofs = OutVideoFrameStream(
-        #     video_path='output/office3.mp4',
-        #     codec='MJPG',
-        #     fps=30,
-        #     height=height,
-        #     width=width
-        # )
+        fps = ifs.reader.get_meta_data()['fps']
+        ofss = []
+        ofs = OutVideoFrameStream(
+            video_path='output/office3.mp4',
+            codec='MJPG',
+            fps=fps,
+            height=height,
+            width=width
+        )
+        ofss.append(ofs)
         ofs = OutAnnotatedFrameStream(
             file_path='output/test/{ff}.txt'.format(ff=ff)
         )
-        processor = Processor(ifs, ofs)
+        ofss.append(ofs)
+        processor = Processor(ifs, ofss)
         processor.start()
 
 if __name__ == '__main__':
@@ -92,6 +95,6 @@ if __name__ == '__main__':
     # test()
     # processor = Assigner()
     # processor.detect_track_match_frames(frames)
-    # single('H0lp_DSqJTs')
+    # single('uIdug5IkkaQ')
     multiple()
     print('wtf')
