@@ -1,35 +1,77 @@
 import abc
+from typing import List
+
+from app.frame_stream import frame_utils
 
 
 class FrameStream(abc.ABC):
     @abc.abstractmethod
-    def add(self, frame, boxes):
-        raise NotImplementedError
+    def init(self):
+        pass
 
     @abc.abstractmethod
-    def add_list(self, frame_list):
-        raise NotImplementedError
+    def release(self):
+        pass
+
+
+class InputFrameStream(FrameStream):
 
     @abc.abstractmethod
-    def get(self, id):
-        raise NotImplementedError
+    def get(self, idx) -> frame_utils.Frame:
+        pass
 
     @abc.abstractmethod
     def get_iter(self):
-        raise NotImplementedError
+        pass
 
     @abc.abstractmethod
     def get_meta(self):
-        raise NotImplementedError
+        pass
+
+
+class OutputFrameStream(FrameStream):
+
+    @abc.abstractmethod
+    def add(self, track_res: frame_utils.TrackResult):
+        pass
+
+    @abc.abstractmethod
+    def add_batch(self, track_res: List[frame_utils.TrackResult]):
+        pass
 
     @abc.abstractmethod
     def flush(self):
-        raise NotImplementedError
+        pass
 
-    @abc.abstractmethod
-    def start(self):
-        raise NotImplementedError
 
-    @abc.abstractmethod
-    def stop(self):
-        raise NotImplementedError
+class OutCombinedFrameStream(OutputFrameStream):
+    def __init__(self, *args, **kwargs):
+        if 'ofs_list' in kwargs:
+            self.ofs_list = kwargs['ofs_list']
+        else:
+            self.ofs_list = [arg for arg in args]
+        if len(self.ofs_list) == 0:
+            raise Exception()
+
+    def init(self):
+        for ofs in self.ofs_list:
+            ofs.init()
+
+    def release(self):
+        print('cleaned %d ofs ' % len(self.ofs_list))
+        for ofs in self.ofs_list:
+            ofs.release()
+
+    def add(self, track_res):
+        if track_res is None:
+            return
+        for ofs in self.ofs_list:
+            ofs.add(track_res)
+
+    def add_batch(self, frame_list):
+        for ofs in self.ofs_list:
+            ofs.add_batch(frame_list)
+
+    def flush(self):
+        for ofs in self.ofs_list:
+            ofs.flush()

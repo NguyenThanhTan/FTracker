@@ -1,29 +1,33 @@
 import json
-from app.frame_stream.frame_stream import FrameStream
+import os
+
+from app.frame_stream.frame_stream import OutputFrameStream
 
 
-class OutAnnotatedFrameStream(FrameStream):
+class OutAnnotated(OutputFrameStream):
     def __init__(self, file_path):
         self.frames = []
         self.current_frame = 0
         self.locked = False
         self.file_path = file_path
-
-    def start(self):
         self.frames = []
         self.locked = False
+        self.init()
+
+    def init(self):
+        self.frames = []
         with open(self.file_path, "w+") as f:
             f.truncate(0)
             f.write('[')
 
-    def add(self, frame, boxes):
-        if frame is None:
+    def add(self, track_res):
+        if track_res is None:
             return
         if self.locked:
             raise Exception("Stream locked!")
-        self.frames.append((frame, boxes))
+        self.frames.append(track_res)
 
-    def add_list(self, frame_list):
+    def add_batch(self, frame_list):
         if self.locked:
             raise Exception("Stream locked!")
         self.frames += frame_list
@@ -49,13 +53,11 @@ class OutAnnotatedFrameStream(FrameStream):
             # self.current_frame = len(self.frames)
         return
 
-    def stop(self):
+    def release(self):
         self.locked = True
+        self.frames = []
+        with open(self.file_path, 'rb+') as f:
+            f.seek(-1, os.SEEK_END)
+            f.truncate()
         with open(self.file_path, "a+") as f:
             f.write(']')
-
-    def get_iter(self):
-        raise NotImplementedError
-
-    def get_meta(self):
-        raise NotImplementedError
