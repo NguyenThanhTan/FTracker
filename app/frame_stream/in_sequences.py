@@ -8,13 +8,14 @@ from app.frame_stream.frame_utils import Frame
 
 
 class InSequencesFrameStream(InputFrameStream):
-    def __init__(self, path, fr=None, to=None, zfill=None):
+    def __init__(self, path, fr=None, to=None, zfill=None, file_name=None):
         self.path = path
         self.fr = fr
         self.to = to
         self.frames = []
         self.meta_data = {}
         self.zfill = zfill
+        self.file_name = file_name
         self.init()
 
     def init(self):
@@ -40,7 +41,7 @@ class InSequencesFrameStream(InputFrameStream):
         rid = fid + self.fr
         if self.to is not None and rid > self.to:
             return None
-        return Frame(rid, self.frames[fid])
+        return Frame(fid, self.frames[fid])
 
     def get_iter(self):
         for idx, frame in enumerate(self.frames):

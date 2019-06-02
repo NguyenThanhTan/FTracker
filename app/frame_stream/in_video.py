@@ -5,13 +5,14 @@ from app.frame_stream.frame_utils import flip_chan, Frame
 
 
 class InVideoFrameStream(InputFrameStream):
-    def __init__(self, path, fr=0, to=None):
+    def __init__(self, path, fr=0, to=None, file_name=None):
         self.path = path
         self.fr = fr
         if to is not None:
             self.to = to
         self.reader = None
         self.size = None
+        self.file_name = file_name
         self.init()
 
     def init(self):

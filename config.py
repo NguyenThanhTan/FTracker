@@ -35,11 +35,33 @@ INPUT = {
     'params': {
         'instances': [
             {
-                'path': 'input/data/FaceOcc1/img',
+                'path': 'input/FaceOcc1/img',
+                'file_name': 'FaceOcc1',
                 'fr': 1,
                 'to': 893,
                 'zfill': 4,
-            }
+            },
+            {
+                'path': 'input/DragonBaby/img',
+                'file_name': 'DragonBaby',
+                'fr': 1,
+                'to': 113,
+                'zfill': 4,
+            },
+            {
+                'path': 'input/Dudek/img',
+                'file_name': 'Dudek',
+                'fr': 1,
+                'to': 1145,
+                'zfill': 4,
+            },
+            {
+                'path': 'input/Jumping/img',
+                'file_name': 'Jumping',
+                'fr': 1,
+                'to': 313,
+                'zfill': 4,
+            },
         ]
     }
 }

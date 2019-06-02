@@ -41,7 +41,9 @@ def _get_ofs(conf, ifs):
             codec = 'MJPG'
             out_params['codec'] = codec
         if out_params.get('auto_name', True):
-            file_name = get_file_name(ifs.path)
+            file_name = ifs.file_name
+            if file_name is None:
+                file_name = get_file_name(ifs.path)
             if file_name == '':
                 file_name = config.FALLBACK_FILENAME
             out_params['video_path'] = '{path}/{file_name}.{file_ext}'.format(
@@ -53,7 +55,9 @@ def _get_ofs(conf, ifs):
                 os.mkdir(out_params['path'])
     elif out_type == 'sequence':
         if out_params.get('auto_name', True):
-            file_name = get_file_name(ifs.path)
+            file_name = ifs.file_name
+            if file_name is None:
+                file_name = get_file_name(ifs.path)
             if file_name == '':
                 file_name = config.FALLBACK_FILENAME
             out_params['seq_format'] = '{path}/{file_name}/{{}}.{file_ext}'.format(
@@ -65,7 +69,9 @@ def _get_ofs(conf, ifs):
                 os.mkdir(out_params['path'])
     elif out_type == 'annotated':
         if out_params.get('auto_name', True):
-            file_name = get_file_name(ifs.path)
+            file_name = ifs.file_name
+            if file_name is None:
+                file_name = get_file_name(ifs.path)
             if file_name == '':
                 file_name = config.FALLBACK_FILENAME
             out_params['file_path'] = '{path}/{file_name}.{file_ext}'.format(
