@@ -5,8 +5,8 @@ from app.frame_stream.frame_utils import flip_chan, Frame
 
 
 class InVideoFrameStream(InputFrameStream):
-    def __init__(self, video_path, fr=0, to=None):
-        self.video_path = video_path
+    def __init__(self, path, fr=0, to=None):
+        self.path = path
         self.fr = fr
         if to is not None:
             self.to = to
@@ -15,7 +15,7 @@ class InVideoFrameStream(InputFrameStream):
         self.init()
 
     def init(self):
-        self.reader = imageio.get_reader(self.video_path)
+        self.reader = imageio.get_reader(self.path)
         self.size = self.reader.count_frames()
 
     def get(self, fid):

@@ -9,9 +9,9 @@ class OutSequences(OutputFrameStream):
     __detection_color = DETECTION_COLOR
     __tracking_color = TRACK_COLOR
 
-    def __init__(self, sequences_prefix):
+    def __init__(self, seq_format, *args, **kwargs):
         self.frames = []
-        self.seq_prefix = sequences_prefix
+        self.seq_format = seq_format
         self.init()
 
     def init(self):
@@ -31,5 +31,5 @@ class OutSequences(OutputFrameStream):
     def flush(self):
         for track_res in self.frames:
             new_track_res = frame_utils.mark_boxes(track_res)
-            cv2.imwrite(self.seq_prefix.format(new_track_res.frame.fid), new_track_res.frame.frame_data)
+            cv2.imwrite(self.seq_format.format(new_track_res.frame.fid), new_track_res.frame.frame_data)
         self.frames = []

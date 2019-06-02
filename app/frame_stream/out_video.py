@@ -9,7 +9,7 @@ class OutVideo(OutputFrameStream):
     __detection_color = DETECTION_COLOR
     __tracking_color = TRACK_COLOR
 
-    def __init__(self, video_path, codec, fps, width, height, colored=True):
+    def __init__(self, video_path, codec, fps, width, height, colored=True, *args, **kwargs):
         self.frames = []
         self.four_cc = cv2.VideoWriter_fourcc(*codec)
         self.video_path = video_path

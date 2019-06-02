@@ -5,7 +5,7 @@ from app.frame_stream.frame_stream import OutputFrameStream
 
 
 class OutAnnotated(OutputFrameStream):
-    def __init__(self, file_path):
+    def __init__(self, file_path, *args, **kwargs):
         self.frames = []
         self.current_frame = 0
         self.locked = False

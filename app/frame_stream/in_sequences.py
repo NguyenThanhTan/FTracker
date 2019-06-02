@@ -8,8 +8,8 @@ from app.frame_stream.frame_utils import Frame
 
 
 class InSequencesFrameStream(InputFrameStream):
-    def __init__(self, seq_path, fr=None, to=None, zfill=None):
-        self.seq_path = seq_path
+    def __init__(self, path, fr=None, to=None, zfill=None):
+        self.path = path
         self.fr = fr
         self.to = to
         self.frames = []
@@ -19,11 +19,11 @@ class InSequencesFrameStream(InputFrameStream):
 
     def init(self):
         if not (self.fr and self.to and self.zfill):
-            frames = glob.glob(self.seq_path)
+            frames = glob.glob(self.path)
             frames = sorted(frames, key=lambda x: int(x.split('/')[-1].split('_')[0].split('.')[0]))
             self.frames = [cv2.imread(frame) for frame in frames]
         else:
-            frames = ['{}/{}.jpg'.format(self.seq_path, str(x).zfill(self.zfill)) for x in
+            frames = ['{}/{}.jpg'.format(self.path, str(x).zfill(self.zfill)) for x in
                       range(self.fr, self.to + 1)]
             self.frames = [cv2.imread(y) for y in frames]
         if len(self.frames) == 0:
