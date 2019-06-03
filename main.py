@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from app.frame_stream import OutVideo, OutCombinedFrameStream, InVideoFrameStream, \
     OutAnnotated, OutSequences, InSequencesFrameStream
+from app.frame_stream.out_zmq import OutZMQ
 from app.processor import Processor
 
 import os
@@ -21,6 +22,7 @@ output_type = {
     'video': OutVideo,
     'sequence': OutSequences,
     'annotated': OutAnnotated,
+    'stream': OutZMQ,
     'combined': OutCombinedFrameStream,
 }
 

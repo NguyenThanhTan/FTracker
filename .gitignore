@@ -4,6 +4,7 @@ __pycache__/
 **.jpg
 mobiface80/
 output/
+input/
 data/
 *.pb
 logs/

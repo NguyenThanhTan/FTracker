@@ -24,11 +24,15 @@ First, build the Docker image using this command
 
 `docker build -f Dockerfile --tag face`
 
+Build a network dockernet
+
+`docker network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 dockernet`
+
 Second, start a Docker container using NVidia Docker driver,
 replace your absolute path to cloned project with `{absolute path to face_service}`: 
 i.e.,`'/home/face_service/:/workplace/`
 
-`NV_GPU=3 nvidia-docker run -d  --name=face_dtm  -v {absolute path to face_service}:/workspace/  --entrypoint="tail" face:latest -f /dev/null`
+`NV_GPU=3 nvidia-docker run -d  --name=face_dtm  -v {absolute path to face_service}:/workspace/ --net dockernet --entrypoint="tail" face:latest -f /dev/null`
 
 Finally, you can access to the container:
 
