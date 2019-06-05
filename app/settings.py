@@ -10,7 +10,7 @@ INPUT_SIZE = float(common.getEnv("INPUT_SIZE", "1280."))
 USE_GPU = common.getEnv("USE_GPU", "1") == "1"
 LOGGING_LEVELS = {logging.INFO, logging.DEBUG, logging.WARNING, logging.ERROR, logging.CRITICAL}
 LOGGING_LEVEL_NAMES = {logging.getLevelName(lvl) for lvl in LOGGING_LEVELS}
-LOG_LEVEL_CONFIG = logging.DEBUG
+LOG_LEVEL_CONFIG = logging.WARNING
 # LOG_LEVEL_CONFIG = LOG_LEVEL_CONFIG if LOG_LEVEL_CONFIG in LOGGING_LEVEL_NAMES else logging.getLevelName(logging.INFO)
 
 LOGGING_CONFIG = {

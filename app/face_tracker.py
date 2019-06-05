@@ -22,6 +22,7 @@ class FaceTracks():
 
     def cf_predict(self, frame):
         cf_tracker = cv2.TrackerKCF_create()
+        print(self.troi)
         cf_tracker.init(self.last_frame, self.troi)
         found, box = cf_tracker.update(frame)
         return found, box

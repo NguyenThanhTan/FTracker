@@ -24,6 +24,21 @@ class Detector:
         self.scale = settings.SCALE_UP
         self.device = torch.device("cuda" if self.gpu else "cpu")
         self.net = self.load_net(model_path)
+        self.prior_data = self.get_prior_data()
+        self.scale_factor = self.get_scale()
+        self.mean = torch.tensor([104, 117, 123], dtype=torch.float32).to(self.device).view(3, 1, 1)
+
+    def get_scale(self):
+        scale = torch.Tensor([1280., 720., 1280., 720.])
+        scale = scale.to(self.device)
+        return scale
+
+    def get_prior_data(self):
+        detection_dimensions = torch.tensor([[23,40], [12,20], [6,10]]).to(self.device)
+        priorbox = PriorBox(cfg, detection_dimensions, (720, 1280), phase='test')
+        priors = priorbox.forward()
+        priors = priors.to(self.device)
+        return priors.data
 
     def load_net(self, model_path):
         # set device and mode
@@ -100,22 +115,23 @@ class Detector:
             img = cv2.resize(img, None, None, fx=im_shrink, fy=im_shrink, interpolation=cv2.INTER_LINEAR)
 
         im_height, im_width, _ = img.shape
-        scale = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
+        # scale = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
         img = np.float32(img)
-        img -= (104, 117, 123)
+        # img -= (104, 117, 123)
         img = img.transpose(2, 0, 1)
         img = torch.from_numpy(img).unsqueeze(0)
         img = img.to(self.device)
-        scale = scale.to(self.device)
+        img = img - self.mean
+        # scale = scale.to(self.device)
 
         out = self.net(img)  # forward pass
-        priorbox = PriorBox(cfg, out[2], (im_height, im_width), phase='test')
-        priors = priorbox.forward()
-        priors = priors.to(self.device)
+        # priorbox = PriorBox(cfg, out[2], (im_height, im_width), phase='test')
+        # priors = priorbox.forward()
+        # priors = priors.to(self.device)
         loc, conf, _ = out
-        prior_data = priors.data
-        boxes = decode(loc.data.squeeze(0), prior_data, cfg['variance'])
-        boxes = boxes * scale / im_shrink
+        # prior_data = priors.data
+        boxes = decode(loc.data.squeeze(0), self.prior_data, cfg['variance'])
+        boxes = boxes * self.scale_factor / im_shrink
         boxes = boxes.cpu().numpy()
         scores = conf.data.cpu().numpy()[:, 1]
 
@@ -166,30 +182,33 @@ class Detector:
                 images[idx] = cv2.resize(img, None, None, fx=im_shrink, fy=im_shrink, interpolation=cv2.INTER_LINEAR)
 
         im_height, im_width, _ = images[0].shape
-        scale = torch.Tensor([images[0].shape[1], images[0].shape[0], images[0].shape[1], images[0].shape[0]])
-        images = np.float32(images)
-        images -= np.reshape(a=[104, 117, 123], newshape=(1, 1, 1, 3))
-        images = images.transpose(0, 3, 1, 2)
+        # scale = torch.Tensor([images[0].shape[1], images[0].shape[0], images[0].shape[1], images[0].shape[0]])
+        # images = np.float32(images)
+        # images -= np.reshape(a=[104, 117, 123], newshape=(1, 1, 1, 3))
+        images = np.array(images).transpose(0, 3, 1, 2)
         images = torch.from_numpy(images)  #.unsqueeze(0)
-        images = images.to(self.device)
-        scale = scale.to(self.device)
-
+        images = images.to(self.device).float()
+        images = images - self.mean
+        # scale = scale.to(self.device)
+        start = time.perf_counter()
         out = self.net(images)  # forward pass
-        priorbox = PriorBox(cfg, out[2], (im_height, im_width), phase='test')
-        priors = priorbox.forward()
-        priors = priors.to(self.device)
+        stop = time.perf_counter() - start
+        print('batch forward', stop)
+        # priorbox = PriorBox(cfg, out[2], (im_height, im_width), phase='test')
+        # priors = priorbox.forward()
+        # priors = priors.to(self.device)
         locs, confs, _ = out
         confs = confs.reshape((locs.shape[0], -1, 2))
-        prior_data = priors.data
+        # prior_data = priors.data
         batch_results = []
         for loc, conf in zip(locs, confs):
-            boxes = decode(loc.data.squeeze(0), prior_data, cfg['variance'])
-            boxes = boxes * scale / im_shrink
+            boxes = decode(loc.data.squeeze(0), self.prior_data, cfg['variance'])
+            boxes = boxes * self.scale_factor / im_shrink
             boxes = boxes.cpu().numpy()
             scores = conf.data.cpu().numpy()[:, 1]
 
             # ignore low scores
-            inds = np.where(scores > 0.5)[0]
+            inds = np.where(scores > self.min_score)[0]
             boxes = boxes[inds]
             scores = scores[inds]
 
@@ -205,11 +224,11 @@ class Detector:
 
             # keep top-K faster NMS
             dets = dets[:750, :]
-            dets[:, 2] -= dets[:, 0]
-            dets[:, 3] -= dets[:, 1]
+            # dets[:, 2] -= dets[:, 0]
+            # dets[:, 3] -= dets[:, 1]
             dets = np.clip(dets, a_min=0, a_max=None)
             det_boxes = []
             for det in dets:
-                det_boxes.append(((det[0], det[1], det[2], det[3]), det[4]))
-            batch_results.append(det_boxes)
+                det_boxes.append([det[0], det[1], det[2], det[3], det[4]])
+            batch_results.append(np.array(det_boxes))
         return batch_results
