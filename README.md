@@ -22,7 +22,7 @@ This is a step by step guide to help you install this project
 
 First, build the Docker image using this command
 
-`docker build -f Dockerfile --tag face`
+`docker build . -f Dockerfile --tag face`
 
 Build a network dockernet
 

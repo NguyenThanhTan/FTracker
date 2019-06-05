@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from app.frame_stream import OutVideo, OutCombinedFrameStream, InVideoFrameStream, \
     OutAnnotated, OutSequences, InSequencesFrameStream
+from app.frame_stream.in_zmq import InZMQ
 from app.frame_stream.out_zmq import OutZMQ
 from app.processor import Processor
 
@@ -16,6 +17,7 @@ def get_file_name(path):
 input_type = {
     'video': InVideoFrameStream,
     'sequence': InSequencesFrameStream,
+    'stream': InZMQ,
 }
 
 output_type = {
@@ -99,10 +101,16 @@ def get_ofs(conf, ifs):
 def multiple():
     inp_type = config.INPUT['type']
     inp_params = config.INPUT['params']
-    instances = inp_params['instances']
     inp_cls = input_type[inp_type]
-    for instance in instances:
-        ifs = inp_cls(**instance)
+    if inp_type != 'stream':
+        instances = inp_params['instances']
+        for instance in instances:
+            ifs = inp_cls(**instance)
+            ofs = get_ofs(config.OUTPUT, ifs)
+            processor = Processor(ifs, ofs)
+            processor.start()
+    else:
+        ifs = inp_cls(**inp_params)
         ofs = get_ofs(config.OUTPUT, ifs)
         processor = Processor(ifs, ofs)
         processor.start()

@@ -8,11 +8,11 @@ RUN apt-get install -y libxext6 libsm6 libxrender1 libfontconfig1 libglib2.0-0 f
 
 COPY ./requirements.txt ./requirements.txt
 
-COPY ./mobiface_toolkit/requirements.txt ./mobiface_toolkit/requirements.txt
+COPY ./requirements_2.txt ./requirements_2.txt
 
 RUN pip3 --no-cache-dir install -r requirements.txt
 
-RUN pip3 --no-cache-dir install -r mobiface_toolkit/requirements.txt
+RUN pip3 --no-cache-dir install -r requirements_2.txt
 
 EXPOSE 5000
 
