@@ -56,10 +56,11 @@ def get_iou(bb1, bb2):
 
 
 class FTracker(Tracker):
-    def __init__(self, name='FTracker'):
+    def __init__(self, name='FTracker', annotated_path=''):
         super(FTracker, self).__init__(
             name=name,  # tracker name
         )
+        self.annotated_path = annotated_path
         self.current_frame = 0
         self.current_dataset = None
         self.fn = None
@@ -68,11 +69,12 @@ class FTracker(Tracker):
 
     def register(self, dataset):
         self.current_dataset = dataset
-        self.fn = '{op}/{d}.txt'.format(op='output/test', d='_'.join(self.current_dataset.split('_')[:-1]))
+        self.fn = '{op}/{d}.json'.format(
+            op=self.annotated_path,
+            d='_'.join(self.current_dataset.split('_')[:-1])
+        )
         with open(self.fn, 'r') as f:
-            text = f.read()
-            text = text[:-2] + ']'
-            self.res = json.loads(text)
+            self.res = json.loads(f.read())
 
     def init(self, image, bb):
         # perform your initialisation here
@@ -88,7 +90,7 @@ class FTracker(Tracker):
         bb[2] += bb[0]
         bb[3] += bb[1]
 
-        boxes = self.res[self.current_frame]['boxes'] # {"1": [511, 24, 124, 179]}
+        boxes = self.res[self.current_frame]['boxes']  # {"1": [511, 24, 124, 179]}
         BBGT = np.zeros(shape=(0, 4))
         ids = []
         for bid in boxes:
@@ -107,7 +109,6 @@ class FTracker(Tracker):
             #     pos = x
             #     self.track_target = bid
         print(BBGT)
-        print(bb)
         BBGT[:, 2] += BBGT[:, 0]
         BBGT[:, 3] += BBGT[:, 1]
         if BBGT.size > 0:
@@ -151,7 +152,7 @@ class FTracker(Tracker):
 
 if __name__ == '__main__':
     # instantiate a tracker
-    tracker = FTracker()
+    tracker = FTracker(annotated_path='output/annotated')
 
     # setup experiment (validation subset)
     experiment = ExperimentMobiFace(

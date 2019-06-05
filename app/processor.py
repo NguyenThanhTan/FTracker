@@ -1,9 +1,8 @@
-from typing import Optional
-
 import numpy as np
 
 from app.buffer import Buffer, Batch
-from app.frame_stream import FrameStream
+from app.frame_stream.frame_stream import InputFrameStream, OutputFrameStream
+from app.frame_stream.frame_utils import TrackResult
 from app.settings import logger, BATCH_SIZE, MATCHING, DETECTOR_MODEL_PATH
 from detections.faceboxes.detector import Detector as Fb_detector
 from app.face_tracker import FaceTracker
@@ -16,14 +15,14 @@ import time
 DETECTION_BATCH = 16
 
 class Processor(object):
-    def __init__(self, ifs: Optional[FrameStream], ofss: [FrameStream]):
+    def __init__(self, ifs: InputFrameStream, ofs: OutputFrameStream):
         # self.face_detector = SFD_detector(model='detections/sfd/epoch_204.pth.tar')
         self.face_detector = Fb_detector(model_path=DETECTOR_MODEL_PATH)
         self.face_tracker = FaceTracker()
         # self.encoder = FaceEncoder()
         self.matcher = Matcher()
         self.ifs = ifs
-        self.ofss = ofss
+        self.ofs = ofs
 
     def start(self):
         print('Start process')
@@ -35,8 +34,7 @@ class Processor(object):
         m_time = Timer()
         tt_time = Timer()
 
-        for ofs in self.ofss:
-            ofs.start()
+        self.ofs.init()
         for (frame_id, frame) in self.ifs.get_iter():
             height, width, _ = frame.shape
             batch.update(frame, frame_id, height, width)
@@ -73,12 +71,8 @@ class Processor(object):
                         print('m time: {}'.format(m_time.average_time))
                         tt_time.tic()
                         for idx, tracks in zip(buffer.out_fids, buffer.out_batchtracks):
-                            for ofs in self.ofss:
-                                ofs.add(self.ifs.get(idx), tracks)
-                        for ofs in self.ofss:
-                            ofs.flush()
-                        tt_time.toc()
-                        print('stream time: {}'.format(tt_time.average_time))
+                            self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                        self.ofs.flush()
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
                         buffer.out_fids += fids[BATCH_SIZE:]
                         buffer.out_bitmaps += bitmaps[BATCH_SIZE:]
@@ -95,10 +89,8 @@ class Processor(object):
                         buffer.out_bitmaps += buffer.temp_bitmaps
                 else:
                     for idx, tracks in zip(batch.fids, batch_tracks):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
-                    for ofs in self.ofss:
-                        ofs.flush()
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                    self.ofs.flush()
                 batch_tracks = []
 
         # flush the queue -> process the remaining frames
@@ -112,14 +104,11 @@ class Processor(object):
                     main(self.matcher, last_tracks, last_bitmaps, last_ids)
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)],
                                            [buffer.out_batchtracks[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)]):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
-                    for ofs in self.ofss:
-                        ofs.flush()
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                    self.ofs.flush()
                 else:
                     last_ids = list(buffer.temp_fids) + last_ids
                     last_bitmaps = list(buffer.temp_bitmaps) + last_bitmaps
@@ -128,22 +117,16 @@ class Processor(object):
 
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(0, BATCH_SIZE)],
                                            [buffer.out_batchtracks[i] for i in range(0, BATCH_SIZE)]):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
-                    for ofs in self.ofss:
-                        ofs.flush()
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                    self.ofs.flush()
             else:
                 for idx, tracks in zip(last_ids, last_tracks):
-                    for ofs in self.ofss:
-                        ofs.add(self.ifs.get(idx), tracks)
-                for ofs in self.ofss:
-                    ofs.flush()
-        for ofs in self.ofss:
-            ofs.stop()
+                    self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                self.ofs.flush()
+        self.ofs.release()
 
     def start_batch(self):
         print('Start process')
@@ -156,8 +139,7 @@ class Processor(object):
         t_time = Timer()
         m_time = Timer()
         tt_time = Timer()
-        for ofs in self.ofss:
-            ofs.start()
+        self.ofs.init()
         for (frame_id, frame) in self.ifs.get_iter():
             height, width, _ = frame.shape
             batch.update(frame, frame_id, height, width)
@@ -196,10 +178,8 @@ class Processor(object):
                         print('m time: {}'.format(m_time.average_time))
                         tt_time.tic()
                         for idx, tracks in zip(buffer.out_fids, buffer.out_batchtracks):
-                            for ofs in self.ofss:
-                                ofs.add(self.ifs.get(idx), tracks)
-                        for ofs in self.ofss:
-                            ofs.flush()
+                            self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                        self.ofs.flush()
                         tt_time.toc()
                         print('stream time: {}'.format(tt_time.average_time))
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
@@ -218,10 +198,8 @@ class Processor(object):
                         buffer.out_bitmaps += buffer.temp_bitmaps
                 else:
                     for idx, tracks in zip(batch.fids, batch_tracks):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
-                    for ofs in self.ofss:
-                        ofs.flush()
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                    self.ofs.flush()
                 batch_tracks = []
 
         # flush the queue -> process the remaining frames
@@ -235,14 +213,11 @@ class Processor(object):
                     main(self.matcher, last_tracks, last_bitmaps, last_ids)
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)],
                                            [buffer.out_batchtracks[i] for i in range(BATCH_SIZE, BATCH_SIZE * 2)]):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
-                    for ofs in self.ofss:
-                        ofs.flush()
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                    self.ofs.flush()
                 else:
                     last_ids = list(buffer.temp_fids) + last_ids
                     last_bitmaps = list(buffer.temp_bitmaps) + last_bitmaps
@@ -251,19 +226,13 @@ class Processor(object):
 
                     for idx, tracks in zip([buffer.out_fids[i] for i in range(0, BATCH_SIZE)],
                                            [buffer.out_batchtracks[i] for i in range(0, BATCH_SIZE)]):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
 
                     for idx, tracks in zip(last_ids, last_tracks):
-                        for ofs in self.ofss:
-                            ofs.add(self.ifs.get(idx), tracks)
-                    for ofs in self.ofss:
-                        ofs.flush()
+                        self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                    self.ofs.flush()
             else:
                 for idx, tracks in zip(last_ids, last_tracks):
-                    for ofs in self.ofss:
-                        ofs.add(self.ifs.get(idx), tracks)
-                for ofs in self.ofss:
-                    ofs.flush()
-        for ofs in self.ofss:
-            ofs.stop()
+                    self.ofs.add(TrackResult(self.ifs.get(idx), tracks))
+                self.ofs.flush()
+        self.ofs.release()

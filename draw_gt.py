@@ -2,7 +2,6 @@ import argparse
 import pandas as pd
 import cv2
 import os
-import imageio
 
 parser = argparse.ArgumentParser(description='draw ground truth')
 parser.add_argument('--gt_dir', default='./mobiface80/test/')

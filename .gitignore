@@ -7,6 +7,7 @@ __pycache__/
 mobiface_toolkit/
 mobiface80/
 output/
+input/
 data/
 *.pb
 logs/

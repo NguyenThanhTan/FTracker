@@ -6,10 +6,14 @@ RUN apt-get install -y build-essential python3-dev python3-pip libxml2 libxml2-d
 
 RUN apt-get install -y libxext6 libsm6 libxrender1 libfontconfig1 libglib2.0-0 ffmpeg
 
-COPY . .
+COPY ./requirements.txt ./requirements.txt
+
+COPY ./mobiface_toolkit/requirements.txt ./mobiface_toolkit/requirements.txt
 
 RUN pip3 --no-cache-dir install -r requirements.txt
 
 RUN pip3 --no-cache-dir install -r mobiface_toolkit/requirements.txt
+
+EXPOSE 5000
 
 WORKDIR /workspace
