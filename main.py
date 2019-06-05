@@ -25,6 +25,7 @@ def single(video_id):
     )
     width, height = ifs.get_meta()['source_size']
     fps = ifs.reader.get_meta_data()['fps']
+    ofss = []
     ofs = OutVideoFrameStream(
         video_path=os.path.join(args.save_dir, '{}.mp4'.format(video_id)),
         codec='MJPG',
@@ -32,11 +33,18 @@ def single(video_id):
         height=height,
         width=width
     )
-    # ofs = OutAnnotatedFrameStream(
-    #     file_path='output/out.txt'
-    # )
-    processor = Processor(ifs, ofs)
-    processor.start()
+    ofss.append(ofs)
+    ofs = OutAnnotatedFrameStream(
+        file_path='output/out.txt'
+    )
+    ofss.append(ofs)
+    processor = Processor(ifs, ofss)
+    import time
+    start = time.perf_counter()
+    # processor.start()
+    processor.start_batch()
+    stop = time.perf_counter() - start
+    print('total process time', stop)
 
 def multiple():
     vids = [
@@ -95,6 +103,6 @@ if __name__ == '__main__':
     # test()
     # processor = Assigner()
     # processor.detect_track_match_frames(frames)
-    # single('uIdug5IkkaQ')
-    multiple()
-    print('wtf')
+    single('WIJpl3pVtSM')
+    # multiple()
+    print('Done')

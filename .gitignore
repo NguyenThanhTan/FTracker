@@ -2,6 +2,8 @@ __pycache__/
 **.mp4
 **.avi
 **.jpg
+**.png
+**.txt
 mobiface_toolkit/
 mobiface80/
 output/
