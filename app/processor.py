@@ -78,7 +78,7 @@ class Processor(object):
                         for ofs in self.ofss:
                             ofs.flush()
                         tt_time.toc()
-                        print('tt time: {}'.format(tt_time.average_time))
+                        print('stream time: {}'.format(tt_time.average_time))
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
                         buffer.out_fids += fids[BATCH_SIZE:]
                         buffer.out_bitmaps += bitmaps[BATCH_SIZE:]
@@ -162,7 +162,7 @@ class Processor(object):
             height, width, _ = frame.shape
             batch.update(frame, frame_id, height, width)
 
-            if batch.count % DETECTION_BATCH == 0:
+            if batch.count % BATCH_SIZE == 0:
                 d_time.tic()
                 batch_results = self.face_detector.predict_images(batch.bitmaps)
                 d_time.toc()
@@ -201,7 +201,7 @@ class Processor(object):
                         for ofs in self.ofss:
                             ofs.flush()
                         tt_time.toc()
-                        print('tt time: {}'.format(tt_time.average_time))
+                        print('stream time: {}'.format(tt_time.average_time))
                         buffer.out_batchtracks += batch_tracks[BATCH_SIZE:]
                         buffer.out_fids += fids[BATCH_SIZE:]
                         buffer.out_bitmaps += bitmaps[BATCH_SIZE:]
