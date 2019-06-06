@@ -46,7 +46,7 @@ class Processor(object):
             results = self.face_tracker.get_active_track()
             list_tracks = {}
             dt_time.toc()
-            print('dt time: {}'.format(dt_time.average_time))
+            # print('dt time: {}'.format(dt_time.average_time))
             for box in results['geometries']:
                 id = box['id']
                 xmin = box['xmin']
@@ -140,7 +140,9 @@ class Processor(object):
         m_time = Timer()
         tt_time = Timer()
         self.ofs.init()
+        frames = []
         for (frame_id, frame) in self.ifs.get_iter():
+            frames.append(frame)
             height, width, _ = frame.shape
             batch.update(frame, frame_id, height, width)
 
@@ -149,8 +151,8 @@ class Processor(object):
                 batch_results = self.face_detector.predict_images(batch.bitmaps)
                 d_time.toc()
                 print('db time ', d_time.average_time)
-                for detection in batch_results:
-                    self.face_tracker.match_detection_tracking_hungarian(frame, detection)
+                for i, detection in enumerate(batch_results):
+                    self.face_tracker.match_detection_tracking_hungarian(frames[i], detection)
                     results = self.face_tracker.get_active_track()
                     list_tracks = {}
                     for box in results['geometries']:
@@ -162,6 +164,7 @@ class Processor(object):
                         score = box['score']
                         list_tracks[id] = (xmin, ymin, width, height, score)
                     batch_tracks.append(list_tracks)
+                frames = []
             if batch.count % BATCH_SIZE == 0:
                 if MATCHING:
                     if batch.count % (BATCH_SIZE * 2) == 0:
@@ -207,6 +210,23 @@ class Processor(object):
         if num_last > 0:
             last_ids = list(islice(batch.fids, 0, BATCH_SIZE))[-num_last:]
             last_bitmaps = list(islice(batch.bitmaps, 0, BATCH_SIZE))[-num_last:]
+            d_time.tic()
+            batch_results = self.face_detector.predict_images(last_bitmaps)
+            d_time.toc()
+            print('db time ', d_time.average_time)
+            for i, detection in enumerate(batch_results):
+                self.face_tracker.match_detection_tracking_hungarian(last_bitmaps[i], detection)
+                results = self.face_tracker.get_active_track()
+                list_tracks = {}
+                for box in results['geometries']:
+                    id = box['id']
+                    xmin = box['xmin']
+                    ymin = box['ymin']
+                    width = box['width']
+                    height = box['height']
+                    score = box['score']
+                    list_tracks[id] = (xmin, ymin, width, height, score)
+                batch_tracks.append(list_tracks)
             last_tracks = batch_tracks[-num_last:]
             if MATCHING:
                 if flag == 0:

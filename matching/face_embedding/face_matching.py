@@ -40,9 +40,17 @@ def probe_to_tracklet(probe, batch_bitmaps, batch_tracks, fids):
 
 
 def main(matcher, batch_tracks, batch_bitmaps, fids):
+    bttp = Timer()
+    hung = Timer()
+    bttp.tic()
     probes = batch_tracks_to_probes(batch_tracks, fids)
     tracklets = [probe_to_tracklet(probe, batch_bitmaps, batch_tracks, fids) for probe in probes]
+    bttp.toc()
+    print('bttp time', bttp.average_time) # small compared to hung time
+    hung.tic()
     matcher.new_match_hungarian(tracklets)
+    hung.toc()
+    print('hung time', hung.average_time)
     return batch_tracks
 
 
