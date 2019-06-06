@@ -9,11 +9,7 @@ TrackResult = collections.namedtuple('TrackResult', 'frame boxes')
 
 
 def flip_chan(frame):
-    r = frame[:, :, 1]
-    frame[:, :, 1] = frame[:, :, 2]
-    frame[:, :, 2] = frame[:, :, 0]
-    frame[:, :, 0] = r
-    return frame
+    return cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
 
 def mark_boxes(track_res,
