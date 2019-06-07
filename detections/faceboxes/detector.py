@@ -24,8 +24,8 @@ class Detector:
         self.scale = settings.SCALE_UP
         self.device = torch.device("cuda" if self.gpu else "cpu")
         self.net = self.load_net(model_path)
-        self.prior_data = self.get_prior_data()
-        self.scale_factor = self.get_scale()
+        self.prior_data = None # self.get_prior_data()
+        self.scale_factor = None # self.get_scale()
         self.mean = torch.tensor([104, 117, 123], dtype=torch.float32).to(self.device).view(3, 1, 1)
 
     def get_scale(self):
@@ -115,19 +115,22 @@ class Detector:
             img = cv2.resize(img, None, None, fx=im_shrink, fy=im_shrink, interpolation=cv2.INTER_LINEAR)
 
         im_height, im_width, _ = img.shape
-        # scale = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
-        img = np.float32(img)
+        if self.scale_factor is None:
+            self.scale_factor = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
+            self.scale_factor = self.scale_factor.to(self.device)
+        # img = np.float32(img)
         # img -= (104, 117, 123)
         img = img.transpose(2, 0, 1)
         img = torch.from_numpy(img).unsqueeze(0)
-        img = img.to(self.device)
+        img = img.to(self.device).float()
         img = img - self.mean
-        # scale = scale.to(self.device)
 
         out = self.net(img)  # forward pass
-        # priorbox = PriorBox(cfg, out[2], (im_height, im_width), phase='test')
-        # priors = priorbox.forward()
-        # priors = priors.to(self.device)
+        if self.prior_data is None:
+            priorbox = PriorBox(cfg, out[2], (im_height, im_width), phase='test')
+            priors = priorbox.forward()
+            priors = priors.to(self.device)
+            self.prior_data = priors.data
         loc, conf, _ = out
         # prior_data = priors.data
         boxes = decode(loc.data.squeeze(0), self.prior_data, cfg['variance'])

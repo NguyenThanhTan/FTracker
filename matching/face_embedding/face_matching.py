@@ -488,7 +488,7 @@ class Matcher():
         logger.debug('{} probes for use in match in batch'.format(len(probes)))
         return probes
 
-    def new_match_in_batch_hungarian(self, probes, threshold=1.2):
+    def new_match_in_batch_hungarian(self, probes, threshold=1.05):
 
         logger.debug('Matching in batch')
         self.identities_in_batch = []
@@ -563,7 +563,7 @@ class Matcher():
                     probe.set_id(1000 + self.count_discarded)
                     self.confirmed_tracklets.remove(probe)
 
-    def new_match_hungarian(self, probes, threshold=1.2):
+    def new_match_hungarian(self, probes, threshold=1.05):
 
         self.new_match_in_batch_hungarian(probes)
 
