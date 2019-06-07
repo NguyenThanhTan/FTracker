@@ -8,7 +8,8 @@ from app.processor import Processor
 
 import os
 import config
-
+import cProfile
+import pstats
 
 def get_file_name(path):
     return '.'.join(path.split('/')[-1].split('.')[:-1])
