@@ -1,3 +1,5 @@
+import os
+
 import cv2
 
 from app.frame_stream import frame_utils
@@ -9,13 +11,19 @@ class OutSequences(OutputFrameStream):
     __detection_color = DETECTION_COLOR
     __tracking_color = TRACK_COLOR
 
-    def __init__(self, seq_format, *args, **kwargs):
+    def __init__(self, seq_format, dir_path, *args, **kwargs):
         self.frames = []
         self.seq_format = seq_format
+        self.dir_path = self.seq_format.split()
         self.init()
 
     def init(self):
         self.frames = []
+        if not os.path.exists(self.dir_path):
+            os.mkdir(self.dir_path)
+
+    def is_done(self):
+        return os.path.exists(self.dir_path)
 
     def release(self):
         self.frames = []

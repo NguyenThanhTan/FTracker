@@ -160,7 +160,7 @@ if __name__ == '__main__':
     # setup experiment (validation subset)
     experiment = ExperimentMobiFace(
         root_dir='mobiface80/',  # MOBIFACE80 root directory
-        subset='test',  # which subset to evaluate ('all', 'train' or 'test')
+        subset='vtb',  # which subset to evaluate ('all', 'train' or 'test')
         result_dir='results',  # where to store tracking results
         report_dir='reports'  # where to store evaluation reports
     )

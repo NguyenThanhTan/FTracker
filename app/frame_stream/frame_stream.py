@@ -43,6 +43,10 @@ class OutputFrameStream(FrameStream):
     def flush(self):
         pass
 
+    @abc.abstractmethod
+    def is_done(self):
+        pass
+
 
 class OutCombinedFrameStream(OutputFrameStream):
     def __init__(self, *args, **kwargs):
@@ -75,3 +79,6 @@ class OutCombinedFrameStream(OutputFrameStream):
     def flush(self):
         for ofs in self.ofs_list:
             ofs.flush()
+
+    def is_done(self):
+        all(ofs.is_done for ofs in self.ofs_list)

@@ -26,6 +26,11 @@ class Processor(object):
 
     def start(self):
         print('Start process')
+
+        if self.ofs.is_done():
+            print('Processed! skip')
+            return
+
         buffer = Buffer()
         batch = Batch(BATCH_SIZE)
         flag = 0

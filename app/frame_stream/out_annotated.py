@@ -20,6 +20,9 @@ class OutAnnotated(OutputFrameStream):
             f.truncate(0)
             f.write('[')
 
+    def is_done(self):
+        return os.path.isfile(self.file_path)
+
     def add(self, track_res):
         if track_res is None:
             return

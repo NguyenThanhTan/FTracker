@@ -65,13 +65,14 @@ def _get_ofs(conf, ifs):
                 file_name = get_file_name(ifs.path)
             if file_name == '':
                 file_name = config.FALLBACK_FILENAME
-            out_params['seq_format'] = '{path}/{file_name}/{{}}.{file_ext}'.format(
+            out_params['dir_path'] = '{path}/{file_name}'.format(
                 path=out_params['path'],
                 file_name=file_name,
+            )
+            out_params['seq_format'] = '{dir_path}/{{}}.{file_ext}'.format(
+                dir_path=out_params['dir_path'],
                 file_ext=out_params.get('file_ext', 'jpg')
             )
-            if not os.path.exists(out_params['path']):
-                os.mkdir(out_params['path'])
     elif out_type == 'annotated':
         if out_params.get('auto_name', True):
             file_name = ifs.file_name

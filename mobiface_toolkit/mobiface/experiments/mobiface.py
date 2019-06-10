@@ -58,6 +58,8 @@ class ExperimentMobiFace(object):
             # tracking loop
             boxes, times = tracker.track(
                 img_files, anno[0, :], visualize=visualize)
+            print('boxes', boxes, len(boxes))
+            print('anno', anno, len(anno))
             assert len(boxes) == len(anno), tracker.name + '\'s result on ' + seq_name + ' is wrong'
             
             # record results

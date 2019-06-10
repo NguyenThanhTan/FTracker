@@ -1,3 +1,5 @@
+import os
+
 import cv2
 
 from app.frame_stream.frame_stream import OutputFrameStream
@@ -23,6 +25,9 @@ class OutVideo(OutputFrameStream):
         self.frames = []
         if not self.writer.isOpened():
             self.writer.open(self.video_path, self.four_cc, self.fps, self.frame_size, self.colored)
+
+    def is_done(self):
+        return os.path.isfile(self.video_path)
 
     def release(self):
         self.frames = []

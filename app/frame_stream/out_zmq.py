@@ -52,6 +52,9 @@ class OutZMQ(OutputFrameStream):
         self.sender = None
         self.stopped = True
 
+    def is_done(self):
+        return False
+
     def add(self, track_res):
         if track_res is None:
             return
