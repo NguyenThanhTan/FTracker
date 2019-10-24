@@ -2,7 +2,9 @@
 
 This face tracker is proposed in a bachelor thesis
 at HCM University of Science, Vietnam National University.
+
 The distilled work is detailed in manuscript-1.pdf
+
 Full documents can be found at: (Upcoming...)
 
 ## Getting Started
