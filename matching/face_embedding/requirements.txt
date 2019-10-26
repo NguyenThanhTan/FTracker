@@ -3,7 +3,7 @@ opencv-python == 3.4.0.12
 numpy >= 1.13.0
 scipy == 1.1.0
 scikit-learn == 0.19.2
-Pillow == 5.1.0
+Pillow == 6.2.0
 click == 6.0
 scikit-learn == 0.19.2
 dlib == 19.15.0
